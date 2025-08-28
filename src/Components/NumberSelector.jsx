@@ -1,24 +1,28 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-const NumberSelector = () => {
+const NumberSelector = ({setError,error,selectedNumber,setSelectedNumber}) => {
     const arr = [1,2,3,4,5,6];
 
-    // To selelct a particular number we are using state
-    const [selectedNumber, setSelectedNumber] = useState();
+    const numberselectorHandler = (value) => {
+        setSelectedNumber(value)
+        setError("");
+    }
 
-    console.log(selectedNumber);
+    // To selelct a particular number we are using state
+    // const [selectedNumber, setSelectedNumber] = useState();
+    // console.log(selectedNumber);
 
     return(
         <NumberSelectorContainer>
-
+            <p className="error">{error}</p>
             <div className="flex">
-               {
-                   arr.map((value,index) => (
+
+               {arr.map((value,index) => (
                     <Box 
-                       isSelected = {value === selectedNumber}
+                       isselected = {value === selectedNumber}
                        key={index} 
-                       onClick={() => setSelectedNumber(value)}
+                       onClick={() => numberselectorHandler(value)}
                     >
                     {value}
                     </Box>
@@ -54,6 +58,9 @@ const NumberSelectorContainer = styled.div`
         font-size: 24px;
         font-weight: 700;
     }
+    .error{
+        color: red;
+    }
 `;
 
 const Box = styled.div`
@@ -66,6 +73,6 @@ const Box = styled.div`
     font-weight: 700;
 
     /* changing the number background and color when selected */
-    background-color: ${(props) => (props.isSelected ? "black" : "white")};
-    color: ${(props) => (props.isSelected ? "white" : "black")};
-`
+    background-color: ${(props) => (props.isselected ? "black" : "white")};
+    color: ${(props) => (props.isselected ? "white" : "black")};
+`;
